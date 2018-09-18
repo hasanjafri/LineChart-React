@@ -32,7 +32,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      width: 150,
     },
   },
 };
@@ -58,6 +58,10 @@ class DropdownItems extends React.Component {
     handleMultipleChange = event => {
         this.setState({
             sensors: event.target.value
+        }, () => {
+            window.dispatchEvent(new CustomEvent('handleSensorChange', {
+                detail: this.state.sensors
+            }));
         });
     }
   

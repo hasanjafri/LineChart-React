@@ -9,14 +9,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import MenuIcon from '@material-ui/icons/Menu';
+import DownloadIcon from '@material-ui/icons/CloudDownload';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from './components/listItems';
 import SimpleLineChart from './components/simpleLineChart';
-import SimpleTable from './components/simpleTable';
 import DropdownItems from './components/dropdownItems';
 
 const drawerWidth = 240;
@@ -34,6 +37,10 @@ const styles = theme => ({
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 150,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -93,12 +100,34 @@ const styles = theme => ({
   tableContainer: {
     height: 320,
   },
+  rightIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
 });
 
 class App extends Component {
   state = {
     open: true,
+    output_file_type: '',
+    selected_lines: []
   };
+
+  componentWillMount() {
+    window.addEventListener('handleSensorChange', this._handleSensorChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('handleSensorChange', this._handleSensorChange);
+  }
+
+  _handleSensorChange = event => {
+    this.setState({
+      selected_lines: event.detail
+    });
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -106,6 +135,10 @@ class App extends Component {
 
   handleDrawerClose = () => {
     this.setState({ open: false });
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
@@ -134,11 +167,7 @@ class App extends Component {
               <Typography variant="title" color="inherit" noWrap className={classes.title}>
                 Dashboard
               </Typography>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+              <Button color="inherit">LOG OUT</Button>
             </Toolbar>
           </AppBar>
           <Drawer
@@ -163,17 +192,29 @@ class App extends Component {
               <Divider/>
               <DropdownItems/>
             </Typography>
-            <Typography variant="display1" gutterBottom>
-              Orders
-            </Typography>
+            <Divider hidden/>
             <Typography component="div" className={classes.chartContainer}>
-              <SimpleLineChart />
+              <SimpleLineChart active_sensors={this.state.selected_lines}/>
             </Typography>
-            <Typography variant="display1" gutterBottom>
-              Products
-            </Typography>
-            <div className={classes.tableContainer}>
-              <SimpleTable />
+            <div style={{float: 'right'}}>
+              <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="output_file_type">Output File Type</InputLabel>
+                  <Select
+                  value={this.state.output_file_type}
+                  onChange={this.handleChange}
+                  inputProps={{
+                      name: 'output_file_type',
+                      id: 'output_file_type',
+                  }}
+                  >
+                      <MenuItem value="CSV">CSV</MenuItem>
+                      <MenuItem value="JSON">JSON</MenuItem>
+                  </Select>
+              </FormControl>
+              <Button variant="contained" color="primary" className={classes.button}>
+                <DownloadIcon className={classes.rightIcon}/>
+                DOWNLOAD
+              </Button>
             </div>
           </main>
         </div>
