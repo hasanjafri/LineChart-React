@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
+import { Checkbox, ListItemText } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
@@ -32,7 +32,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
+      width: 200,
     },
   },
 };
@@ -90,22 +90,30 @@ class DropdownItems extends React.Component {
                     value={this.state.sensors}
                     onChange={this.handleMultipleChange}
                     input={<Input id="sensors"/>}
-                    renderValue={selected => (
-                        <div className={classes.chips}>
-                            {selected.map(value => (
-                                <Chip key={value} label={value} className={classes.chip}/>
-                            ))}
-                        </div>
-                    )}
+                    // renderValue={selected => (
+                    //     <div className={classes.chips}>
+                    //         {selected.map(value => (
+                    //             <Chip key={value} label={value} className={classes.chip}/>
+                    //         ))}
+                    //     </div>
+                    // )}
+                    renderValue={selected => selected.join(', ')}
                     MenuProps={MenuProps}
                 >
                     {sensors_list.map(sensors => (
+                        // <MenuItem
+                        //     key={sensors}
+                        //     value={sensors}
+                        //     style={{fontWeight: this.state.sensors.indexOf(sensors) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium}}
+                        // >
+                        //     {sensors}
+                        // </MenuItem>
                         <MenuItem
                             key={sensors}
                             value={sensors}
-                            style={{fontWeight: this.state.sensors.indexOf(sensors) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium}}
                         >
-                            {sensors}
+                            <Checkbox checked={this.state.sensors.indexOf(sensors) > -1}/>
+                            <ListItemText primary={sensors}/>
                         </MenuItem>
                     ))}
                 </Select>

@@ -10,12 +10,12 @@ import Legend from 'recharts/lib/component/Legend';
 
 const data = [
   { time: '18:10', "CH01 SE01": -47, "CH01 SE14": -33, "CH03 SE01": -22 },
-  { time: '18:11', "CH01 SE01": -23, "CH01 SE14": -11, "CH03 SE01": 55 },
-  { time: '18:12', "CH01 SE01": 11, "CH01 SE14": 33, "CH03 SE01": -11 },
-  { time: '18:13', "CH01 SE01": 54, "CH01 SE14": 111, "CH03 SE01": 77 },
-  { time: '18:14', "CH01 SE01": 123, "CH01 SE14": 177, "CH03 SE01": 155 },
-  { time: '18:15', "CH01 SE01": 177, "CH01 SE14": 122, "CH03 SE01": 65 },
-  { time: '18:16', "CH01 SE01": 98, "CH01 SE14": 88, "CH03 SE01": 101 },
+  { time: '18:15', "CH01 SE01": -23, "CH01 SE14": -11, "CH03 SE01": 55 },
+  { time: '18:20', "CH01 SE01": 11, "CH01 SE14": 33, "CH03 SE01": -11 },
+  { time: '18:25', "CH01 SE01": 54, "CH01 SE14": 111, "CH03 SE01": 77 },
+  { time: '18:30', "CH01 SE01": 123, "CH01 SE14": 177, "CH03 SE01": 155 },
+  { time: '18:35', "CH01 SE01": 177, "CH01 SE14": 122, "CH03 SE01": 65 },
+  { time: '18:40', "CH01 SE01": 98, "CH01 SE14": 88, "CH03 SE01": 101 },
 ];
 
 const lineColors = {

@@ -165,7 +165,7 @@ class App extends Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="title" color="inherit" noWrap className={classes.title}>
-                Dashboard
+                DATA
               </Typography>
               <Button color="inherit">LOG OUT</Button>
             </Toolbar>
